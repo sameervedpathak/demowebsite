@@ -1,0 +1,32 @@
+<div class="container">
+	<h2>Map Example</h2>
+	<div style="width: 68%; float:left; height: 100%">
+      <br/>
+      <ng-map zoom="14" center="37.7699298, -122.4469157" >
+        <directions
+          draggable="true"
+          travel-mode="DRIVING"
+          origin="current-location"
+          destination="Montreal, Canada">
+        </directions>
+      </ng-map>
+      <br/>
+      <br/>
+      <h2>Map with current location Example</h2>
+      <ng-map zoom="11" center="[40.74, -74.18]" map-type-id="MapTypeId.ROADMAP">
+        <marker position="current" animation="Animation.BOUNCE" centered="true" on-dragend="getpos($event)" 
+        animation="Animation.BOUNCE" animation="DROP" draggable="true"></marker>
+      </ng-map>
+     <!--  <ng-map center="-25.363882,131.044922" zoom="4" on-click="getpos($event)">
+      <marker position="{{latlng}}" title="Hello World!" on-dragend="getpos($event)" 
+        animation="Animation.BOUNCE" animation="DROP" draggable="true"></marker>
+    </ng-map> -->
+      <br/>
+      <br/>
+    </div>
+</div>
+<style>
+      html, body {width:100%; height: 100%; padding:0; margin: 0}
+      body {padding: 5px}
+      * { box-sizing: border-box; }
+</style>

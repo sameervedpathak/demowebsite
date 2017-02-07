@@ -12,12 +12,15 @@
     "body-parser": "^1.15.2",
     "connect": "^3.5.0",
     "express": "^4.14.0",
+    "fs-extra": "^2.0.0",
     "md5": "^2.2.1",
+    "mkdirp": "^0.5.1",
     "morgan": "^1.7.0",
     "mysql": "^2.12.0",
     "mysql-crud": "^0.1.4",
     "nodemailer": "^2.7.0",
     "serve-static": "^1.11.1",
+    "tinify": "^1.4.0",
     "use-strict": "^1.0.1"
   }
 }

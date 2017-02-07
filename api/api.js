@@ -21,5 +21,6 @@ var user = require('./user.js');
 
 //User Api's
 app.post('/api/userlogin' , user.userlogin);
+app.post('/api/uploadImage' , user.uploadImage);
 
 module.exports = app;

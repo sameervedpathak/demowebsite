@@ -6,7 +6,14 @@ var sampleModule = 'demoApp';
 
 
 // Create the main application
-var sampleModule = angular.module('demoApp', ['ui.router','ngMessages','angular-storage']);
+var sampleModule = angular.module('demoApp', ['ui.router','ngMessages','angular-storage','ngFileUpload' , 'ngMap']);
+
+sampleModule
+  .run(function( $rootScope, $state ) {
+  // Load the facebook SDK asynchronously
+
+
+})
 
 sampleModule
 .config(['$urlRouterProvider', '$stateProvider', '$httpProvider', 'storeProvider' , function($urlRouterProvider, $stateProvider, $httpProvider , storeProvider) {
@@ -21,7 +28,14 @@ sampleModule
 
     .state('home', {
       url: '/home',
-      templateUrl: 'templates/home.html'
+      templateUrl: 'templates/home.html',
+      controller : 'MainController'
+    })
+
+    .state('map', {
+      url: '/map',
+      templateUrl: 'templates/map.html',
+      controller : 'MainController'
     });
 
 }]);
@@ -36,46 +50,62 @@ angular.module('demoApp').controller('MainController', [
   '$state',
   'store',
   '$timeout',
-  function($scope, $http, $stateParams, $location, $rootScope, $state, store, $timeout) {
+  'Upload',
+  'NgMap',
+  function($scope, $http, $stateParams, $location, $rootScope, $state, store, $timeout ,Upload , NgMap) {
 
   	$scope.init = function() {
         
   	};
 
-    $scope.login = function() {
-        console.log("login function calling");
-        console.log($scope.user);
-        $http.post(baseURL + 'userlogin', $scope.user).success(function(res, req) {
-          
-          /*if (res.status == true) {
-            AuthService.isAuthenticated = true;
-            var superadminuser = {
-              'login': true,
-              'username': res.record[0].username,
-              'useremail': res.record[0].useremail,
-              'userid': res.record[0].userid,
-              'superadminid': res.record[0].userid,
-              'token' : res.token
-            };
-            AuthService.isAuthenticated = true;
-            $cookieStore.put('superadminuser', superadminuser);
-            $scope.init();
-            $location.path('/welcomepage');
-          } else if (res.status === false) {
-            //console.log("login failed");
-              $scope.errmessage = 'Failed To Login';
-            $scope.showerrmessage = true;
-             $timeout(function() {
-              $timeout(function() {
-                $scope.showerrmessage = false;
-              }, 3000);
-            }, 2000);
-          }*/
-        }).error(function() {
-          console.log("Connection Problem.");
-        }); 
+    $scope.docallBack = function() {
+        var friends = ["Mike", "Stacy", "Andy", "Rick"];
+        letscallBackFunction(friends, function(res){
+          console.log("success");
+          console.log(res);
+        });
+
+        
     };
 
+    function letscallBackFunction(friends , callback){
+        var info = angular.forEach(friends,function (eachName, index){
+            console.log(index + 1 + ". " + eachName); // 1. Mike, 2. Stacy, 3. Andy, 4. Rick​
+        });
+      callback(info);  
+      
+    };
+
+    //simple for loop
+    $scope.forloop = function(){
+      var i,j,yy;
+        for(i=0; i<10; i++){
+            for(j=1 ; j<i ; j++){
+              yy = yy+("*");   
+            }
+
+        }
+      console.log("yy:",yy);
+       yy ='';
+    };
+
+    //print on simple pattern
+    $scope.printPattern = function(){
+      var i = 1;
+      for(;i<11;i++){
+        console.log("*");
+      }
+    }
+
+    //simple for each in javascrpit
+    $scope.SimpleForEach =function(){
+      var copyname=[];
+      var names = ["sam","sam1","sam2"];
+      names.forEach(function(name){
+        console.log("name:",name);
+      },copyname);
+      console.log(copyname);
+    }
     /**
       @function signout
       @returns successful signout successful message and go to signin page
@@ -89,6 +119,13 @@ angular.module('demoApp').controller('MainController', [
       AuthService.isAuthenticated = false;
       $location.path('signin');
     };
+
+    $scope.ConcatTwoArray = function(){
+      var A = ["a","b","c"];
+      var B = ["d","e","f"];
+      var C = A.concat(B);
+      console.log("C:",C);
+    }
 
     /**
       @function superadminforgetpass
@@ -181,6 +218,59 @@ angular.module('demoApp').controller('MainController', [
         }
       }
     };
+
+    $scope.uploadImage = function(){
+        var reader = new window.FileReader();
+        reader.readAsDataURL($scope.file[0]);
+        reader.onloadend = function() {
+          console.log(reader.result);
+          var imagedata = {};
+          imagedata.img = reader.result;
+          $http.post(baseURL + 'uploadImage', imagedata).success(function(res, req) {
+            console.log(res);
+          }).error(function(err){
+            console.log("err");
+          });
+
+        };
+
+
+      
+    }
+    
+
+    var options = {enableHighAccuracy: true};
+
+    $scope.mapfunction = function(){
+      NgMap.getMap().then(function(map) {
+        console.log(map.getCenter());
+        console.log('markers', map.markers);
+        console.log('shapes', map.shapes);
+          $scope.latlng = 'current';
+
+      });
+
+      //get current location with latitude and longitude
+      navigator.geolocation.getCurrentPosition(function(pos) {
+                $scope.position = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+                console.log(JSON.stringify($scope.position));                  
+            }, 
+            function(error) {                    
+                alert('Unable to get location: ' + error.message);
+            }, options);
+    }
+
+    $scope.mapfunction();
+    
+    //get current position with latitude and longitude 
+    $scope.getpos = function(event){
+             $scope.latlng = [event.latLng.lat(), event.latLng.lng()];
+             console.log("$scope.latlng:",$scope.latlng);
+    };
+
+   
+
+
 
   }
 ]);

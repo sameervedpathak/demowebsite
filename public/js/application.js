@@ -36,6 +36,12 @@ sampleModule
       url: '/map',
       templateUrl: 'templates/map.html',
       controller : 'MainController'
+    })
+
+    .state('indeed', {
+      url: '/indeed',
+      templateUrl: 'templates/indeed.html',
+      controller : 'MainController'
     });
 
 }]);
@@ -268,7 +274,14 @@ angular.module('demoApp').controller('MainController', [
              console.log("$scope.latlng:",$scope.latlng);
     };
 
-   
+    // sample get Api for get indeed job
+    $scope.scrapeJobs = function () {
+      $http.get(baseURL + 'scrapeJobs').success(function(res, req) {
+            console.log(res);
+          }).error(function(err){
+            console.log("err");
+      });
+    }   ;
 
 
 

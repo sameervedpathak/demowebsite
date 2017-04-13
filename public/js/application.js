@@ -36,6 +36,12 @@ sampleModule
       url: '/map',
       templateUrl: 'templates/map.html',
       controller : 'MainController'
+    })
+
+    .state('editprofile', {
+      url: '/editprofile',
+      templateUrl: 'templates/editprofile.html',
+      controller : 'MainController'
     });
 
 }]);
@@ -55,8 +61,11 @@ angular.module('demoApp').controller('MainController', [
   function($scope, $http, $stateParams, $location, $rootScope, $state, store, $timeout ,Upload , NgMap) {
 
   	$scope.init = function() {
-        
+        $scope.usersession = store.get('usersession');
+        console.log("user:",$scope.usersession);
   	};
+    
+    $scope.init();
 
     $scope.docallBack = function() {
         var friends = ["Mike", "Stacy", "Andy", "Rick"];
@@ -268,8 +277,71 @@ angular.module('demoApp').controller('MainController', [
              console.log("$scope.latlng:",$scope.latlng);
     };
 
-   
+    /*$http.get(baseURL + 'getstudentdata').success(function(res, req) {
+            console.log(res);
+          }).error(function(err){
+            console.log("err");
+    });*/   
 
+
+   $scope.data = {};
+
+   /* Function for New User Registration*/       
+
+   $scope.createuser = function(signupfrm) {
+
+    console.log($scope.data);
+      $http.post(baseURL + 'createuser' , $scope.data).success(function(res, req) {
+          console.log(res);
+          if(res.status == 1){
+            $scope.data = {};
+            signupfrm.$setPristine();
+          }else{
+            console.log("Error...");
+          }
+        }).error(function(err){
+          console.log("err");
+      });         
+  };
+
+  $scope.user = {};
+
+  /*Function for Login */
+  $scope.dologin = function(signinform){
+      $http.post(baseURL + 'dologin/', $scope.user).success(function(res){
+        if(res.status === 1){
+          var usersession = res.record;
+          usersession.loginstatus = 'login';
+          store.set('usersession',usersession);
+          var usersession = store.get('usersession');
+          console.log(store.get('usersession'));
+          $scope.init();
+          $state.go('editprofile');
+        }else{
+          console.log("login Failed");
+        }
+      }).error(function(error){
+        console.log("something is wrong..");
+      })
+  };
+
+  console.log("MainController Calling");
+
+  $scope.Updatepro = function(updateProfile){
+    if(updateProfile){
+      $http.post(baseURL + 'updateProfile', $scope.usersession).success(function(res){
+        if(res.status == 1){
+          store.set('usersession',$scope.usersession);
+          $scope.init();
+        }else{
+          console.log("not updated");
+        }
+      }).error(function(error){
+
+      });
+
+    }
+  };
 
 
   }

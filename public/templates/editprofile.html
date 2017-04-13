@@ -1,0 +1,37 @@
+<div class="container" style="margin: 40px;" >
+	<form role="form" class="form-horizontal" name="updateProfile" ng-submit="Updatepro(updateProfile)" novalidate>
+    <div class="form-group">
+        <label for="inputEmail" class="control-label col-xs-2">Name</label>
+        <div class="col-xs-5">
+            <input type="text" class="form-control" id="inputEmail" placeholder="Full Name" ng-model="usersession.name" name="fullname" required>
+            <div data-ng-messages="updateProfile.$submitted && updateProfile.fullname.$error">
+            	<p data-ng-message="required">Enter user name</p>
+            </div>
+        </div>
+    </div>
+      <div class="form-group">
+        <label for="inputEmail" class="control-label col-xs-2">Username</label>
+        <div class="col-xs-5">
+            <input type="text" class="form-control" id="inputEmail" placeholder="User Name" ng-model="usersession.username" required>
+            <div data-ng-messages="updateProfile.$submitted && updateProfile.username.$error">
+            	<p data-ng-message="required">Enter the user Name</p>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputPassword" class="control-label col-xs-2">Address</label>
+        <div class="col-xs-5">
+            <input type="text" class="form-control" id="inputPassword" placeholder="Password" ng-model="usersession.address" name="address" required>
+            <div data-ng-messages="updateProfile.$submitted && updateProfile.address.$error">
+            	<p data-ng-message="required">Enter the address</p>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-offset-2 col-xs-10">
+            <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+    </div>
+</form>
+
+</div>

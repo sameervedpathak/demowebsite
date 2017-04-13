@@ -20,7 +20,8 @@ app.use(bodyParser.raw({ limit: '50mb' }));
 var user = require('./user.js');
 
 //User Api's
-app.post('/api/userlogin' , user.userlogin);
-app.post('/api/uploadImage' , user.uploadImage);
+app.post('/api/createuser',user.createuser);
+app.post('/api/dologin' ,user.dologin);
+app.post('/api/updateProfile' , user.updateProfile);
 
 module.exports = app;

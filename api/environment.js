@@ -2,7 +2,9 @@
 var mysql = require('mysql');
 var http = require('http');
 var nodemailer = require('nodemailer');
-
+var mongo = require('mongodb');
+var monk = require('monk');
+var db ;
 
 var enviroment = {
 	Dbconnection : mysql.createPool({
@@ -12,6 +14,8 @@ var enviroment = {
 		    host :'localhost',
 	
 	}),
+
+	//db : monk('localhost:27017/test'),
 
 	/** Function For Time stamp**/
 	timestamp: function() {

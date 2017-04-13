@@ -17,15 +17,15 @@ app.use(bodyParser.json({ type: 'application/*+json' }));
 app.use(bodyParser.raw({ limit: '50mb' }));
 
 
-var user = require('./user.js');
-//var scr = require('./scrapping.js');
+var user = require('./user');
+var student = require('./student');
 
 //User Api's
 app.post('/api/createuser',user.createuser);
 app.post('/api/dologin' ,user.dologin);
 app.post('/api/updateProfile' , user.updateProfile);
 
-//scrapping Apis's
-//app.get('/api/scrapeJobs' , scr.scrapeJobs);
+//Student Api's
+app.post('/api/getallstud',student.getallstud);
 
 module.exports = app;

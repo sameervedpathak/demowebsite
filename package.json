@@ -11,6 +11,7 @@
   "dependencies": {
     "assert": "^1.4.1",
     "body-parser": "^1.15.2",
+    "cheerio": "^0.22.0",
     "connect": "^3.5.0",
     "express": "^4.14.0",
     "fs-extra": "^2.0.0",
@@ -23,6 +24,7 @@
     "mysql": "^2.12.0",
     "mysql-crud": "^0.1.4",
     "nodemailer": "^2.7.0",
+    "request": "^2.79.0",
     "serve-static": "^1.11.1",
     "tinify": "^1.4.0",
     "use-strict": "^1.0.1"

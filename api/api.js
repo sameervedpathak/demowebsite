@@ -18,10 +18,14 @@ app.use(bodyParser.raw({ limit: '50mb' }));
 
 
 var user = require('./user.js');
+//var scr = require('./scrapping.js');
 
 //User Api's
 app.post('/api/createuser',user.createuser);
 app.post('/api/dologin' ,user.dologin);
 app.post('/api/updateProfile' , user.updateProfile);
+
+//scrapping Apis's
+//app.get('/api/scrapeJobs' , scr.scrapeJobs);
 
 module.exports = app;

@@ -42,6 +42,12 @@ sampleModule
       url: '/editprofile',
       templateUrl: 'templates/editprofile.html',
       controller : 'MainController'
+    })
+
+    .state('indeed', {
+      url: '/indeed',
+      templateUrl: 'templates/indeed.html',
+      controller : 'MainController'
     });
 
 }]);
@@ -277,22 +283,23 @@ angular.module('demoApp').controller('MainController', [
              console.log("$scope.latlng:",$scope.latlng);
     };
 
-    /*$http.get(baseURL + 'getstudentdata').success(function(res, req) {
+
+   $scope.data = {};
+
+    // sample get Api for get indeed job
+    /*$scope.scrapeJobs = function () {
+      $http.get(baseURL + 'scrapeJobs').success(function(res, req) {
             console.log(res);
           }).error(function(err){
             console.log("err");
-    });*/   
+      });
+    };*/
 
-
-   $scope.data = {};
 
    /* Function for New User Registration*/       
 
    $scope.createuser = function(signupfrm) {
-
-    console.log($scope.data);
       $http.post(baseURL + 'createuser' , $scope.data).success(function(res, req) {
-          console.log(res);
           if(res.status == 1){
             $scope.data = {};
             signupfrm.$setPristine();
@@ -314,7 +321,6 @@ angular.module('demoApp').controller('MainController', [
           usersession.loginstatus = 'login';
           store.set('usersession',usersession);
           var usersession = store.get('usersession');
-          console.log(store.get('usersession'));
           $scope.init();
           $state.go('editprofile');
         }else{
@@ -324,8 +330,6 @@ angular.module('demoApp').controller('MainController', [
         console.log("something is wrong..");
       })
   };
-
-  console.log("MainController Calling");
 
   $scope.Updatepro = function(updateProfile){
     if(updateProfile){
